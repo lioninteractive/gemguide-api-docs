@@ -146,6 +146,7 @@ Invalid requests may receive one of the following error responses:
 - `no_shape_name_provided`: The request was missing a value for `name`
 - `no_weight_provided`: The request was missing a value for `weight`
 - `invalid_gem`: The value for `name` does not match any gemstone names in the Gemguide database.
+- `invalid_weight_nan`: The `weight` specified is not a number
 - `invalid_weight`: The `weight` specified falls outside the range of weights for the requested gem. The gem's valid weight range will be specified in the `message` property in the error response.
 - `server_error`: There was an unexpected server issue.
 
@@ -252,6 +253,7 @@ Invalid requests may receive one of the following error responses:
 - `no_clarity_provided`: The request was missing a value for `clarity`
 - `no_weight_provided`: The request was missing a value for `weight`
 - `invalid_shape`: The `name` specified did not match a diamond shape name.
+- `invalid_weight_nan`: The `weight` specified is not a number
 - `invalid_weight`: The `weight` specified falls outside the range of weights for the requested diamond. The diamond shape's valid weight range will be specified in the `message` property in the error response.
 - `invalid_color`: The `color` value did not match a valid color. Valid colors are specified at the top of this section (**Routes#Diamonds**)
 - `invalid_clarity`: The `color` value did not match a valid clarity. Valid clarities are specified at the top of this section (**Routes#Diamonds**)
