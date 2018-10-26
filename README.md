@@ -195,7 +195,7 @@ Another way to visualize a given response could be like so (not precisely based 
 ]
 ```
 
-In some instances, such as in the first diamond response example, where there are no valid values for a specified configuration. For example, if you select `IF/FL` as your clarity level, there is no higher clarity level to reference. In these cases, instead of a price, the value will be filled in with a hyphen (`-`). This can also happen with colors, as you cannot go higher than `D` or lower than `M`.
+In some instances, such as in the first diamond response example, there are no valid values for a specified configuration. For example, if you select `IF/FL` as your clarity level, there is no higher clarity level to reference. In these cases, instead of a price, the value will be filled in with a hyphen (`-`). This can also happen with colors, as you cannot go higher than `D` or lower than `M`.
 
 To further elaborate this, if you set a color to be `D` (the highest color value) and clarity to be `I3` (the lowest clarity value) you would get a response that looks like this:
 
