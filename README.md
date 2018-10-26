@@ -18,7 +18,7 @@ As part of the registration process to receive your API key, you will also need 
 
 ## Authentication
 
-The Gemguide Pricing API uses a modified OAuth1 flow to authenticate users with their [Gemworld International](https://gemguide.com) account credentials.  All Pricing Data API requests require both a valid API key (application specific; provided by Gemguide as part of the API access registration described above) **and** the user-specific token obtained via a queery arg appended to the Success callback URL.
+The Gemguide Pricing API uses a modified OAuth1 flow to authenticate users with their [Gemworld International](https://gemguide.com) account credentials.  All Pricing Data API requests require both a valid API key (application specific; provided by Gemguide as part of the API access registration described above) **and** the user-specific token obtained via a query arg appended to the Success callback URL.
 
 In order to begin the authentication process and retrieve the user token, you will need to create a login button that sends users to the following URL (where `client_key` is your application's API key as described in the **Setup** section above):
 
@@ -195,7 +195,7 @@ Another way to visualize a given response could be like so (not precisely based 
 ]
 ```
 
-In some instances, such as in the first diamond response example, where there are no valid values for a specified configuration. For example, if you select `IF/FL` as your clarity level, there is no higher clarity level to reference. In these cases, instead of a price, the value will be filled in with a hyphen (`-`). This can also happen with colors, as you cannot go higher than `D` or lower than `M`.
+In some instances, such as in the first diamond response example, there are no valid values for a specified configuration. For example, if you select `IF/FL` as your clarity level, there is no higher clarity level to reference. In these cases, instead of a price, the value will be filled in with a hyphen (`-`). This can also happen with colors, as you cannot go higher than `D` or lower than `M`.
 
 To further elaborate this, if you set a color to be `D` (the highest color value) and clarity to be `I3` (the lowest clarity value) you would get a response that looks like this:
 
