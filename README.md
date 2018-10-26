@@ -102,7 +102,7 @@ The response will be an object of arrays like so:
 }
 ```
 
-The values 1 through 10 represent increasing levels of clarity (which typically implies a corresponding increase in price).  Price values are returned as arrays since some values represent a range of prices from low to high (e.g. `[9, 12]`) rather than as a single, discreet price point. **Developers can check the size of the returned array to determine whether the value repesents a single price or a price range; one value means a single price, two values means a range of prices.**
+The values 1 through 10 represent increasing levels of clarity (which typically implies a corresponding increase in price).  Price values are returned as arrays since some values represent a range of prices from low to high (e.g. `[9, 12]`) rather than as a single, discrete price point. **Developers can check the size of the returned array to determine whether the value repesents a single price or a price range; one value means a single price, two values means a range of prices.**
 
 **Error Handling:**
 
@@ -159,7 +159,7 @@ The response will be an array of three arrays, each with three values, like so:
 ]
 ```
 
-The response contains a multi-dimensional array a "table" of prices based on the configuration specified in the query arguments. The top-level array values represent rows in the table, whereas each nested array represents columns within that row.  The example API response from above could be represented as:
+The response contains a multi-dimensional array, a "table" of prices, based on the configuration specified in the query arguments. The top-level array values represent rows in the table, whereas each nested array represents columns within that row.  The example API response from above could be represented as:
 
 ```
 |  -  | 6930 | 6230 |
