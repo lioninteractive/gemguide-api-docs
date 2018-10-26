@@ -18,7 +18,7 @@ As part of the registration process to receive your API key, you will also need 
 
 ## Authentication
 
-The Gemguide Pricing API uses a modified OAuth1 flow to authenticate users with their [Gemworld International](https://gemguide.com) account credentials.  All Pricing Data API requests require both a valid API key (application specific; provided by Gemguide as part of the API access registration described above) **and** the user-specific token obtained via a queery arg appended to the Success callback URL.
+The Gemguide Pricing API uses a modified OAuth1 flow to authenticate users with their [Gemworld International](https://gemguide.com) account credentials.  All Pricing Data API requests require both a valid API key (application specific; provided by Gemguide as part of the API access registration described above) **and** the user-specific token obtained via a query arg appended to the Success callback URL.
 
 In order to begin the authentication process and retrieve the user token, you will need to create a login button that sends users to the following URL (where `client_key` is your application's API key as described in the **Setup** section above):
 
