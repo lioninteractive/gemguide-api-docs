@@ -1,41 +1,36 @@
 ![Gemguide logo](https://app.gemguide.com/static/images/logo.png)
 
-
 # Gemguide Pricing Data API
 
 This documentation is intended for developers learning how to use the Gemguide Pricing API. 
 
 All of the steps required will be outlined below, but if you would like to see a working example to supplement your understanding, please see the following [repository](https://github.com/lioninteractive/gemguide-api-docs).
 
-
 ## Setup
 
-If you are reading this documentation then you have presumably already have your API key and have been added as an API User authorized to make requests to the Gemguide Pricing API. This key will be required for all requests.
+If you are reading this documentation then you presumably already have an API key and have been registered as an authorized API user for the Gemguide Pricing API. If do not already have an API key, please contact Gemguide support for further assistance.  The API key will be required for all requests.
 
+As part of the registration process to receive your API key, you will also need to provide two URLs:
 
-In addition to receiving an API key, you will have had to provid two URL’s to Gemguide:
-
-1. **Success callback:** This is the page you direct users to if they have been successfully authenticated upon logging in to your app. *This callback will be appended with the user's unique identifier as a query argument, which will be required for all requests.*
+1. **Success callback:** Users will be redirected to this URL after successfully authenticating with their Gemguide account credentials. *A user-specific token will be appended to the callback URL. This token is required for all subsequent requests on the user's behalf.*
 	
-2. **Failure callback:** This is the page you direct users to if anything goes wrong during the authentication process.
-
+2. **Failure callback:** Users will be redirected to this URL after authentication failure (e.g. incorrect account credentials).
 
 ## Authentication
 
-The Gemguide Pricing API uses OAuth1 to authenticate users registered with [Gemworld International](https://gemguide.com).
+The Gemguide Pricing API uses a modified OAuth1 flow to authenticate users with their [Gemworld International](https://gemguide.com) account credentials.  All Pricing Data API requests require both a valid API key (application specific; provided by Gemguide as part of the API access registration described above) **and** the user-specific token obtained via a queery arg appended to the Success callback URL.
 
-In order to authenticate users and receive their unique identifier required for all requests, you will need to create a log-in button that sends them to the following link where `client_key` is the API key provided to you by Gemguide, as detailed in the **Setup** section above:
+In order to begin the authentication process and retrieve the user token, you will need to create a login button that sends users to the following URL (where `client_key` is your application's API key as described in the **Setup** section above):
 
 `https://app.gemguide.com/api_authorize?client_key={your API key}`
 
-If they are successfully authenticated, then they will be eventually routed back to your **Success callback** as detailed in the **Setup** section above. The success URL could look like the following, where the `user` query arg is appended by Gemguide. This identifier must be retrieved and stored by your app, as it is required in order to make future requests:
+Once arriving at the above URL, users will be asked to authenticate using their Gemguide account credentials.  If they are successfully authenticated, then they will be eventually routed back to your **Success callback** as detailed in the **Setup** section above. The success URL could look like the following, where the `user` query arg is appended by Gemguide. This identifier must be retrieved and stored by your app, as it is required in order to make future requests:
 
 `https://app.yourapp.com/success_callback?user={unique identifier}`
 
 **This unique identifier will change every time the user logs in, so it is important that you update this value every time that they do.**
 
-If anything goes wrong during the authentication process, then the user will be redirect to the **Failure callback** as detailed in the **Setup** section above.
-
+If anything goes wrong during the authentication process, then the user will be redirect to the **Failure callback** as detailed in the **Setup** section above.  Your application should account for login failure by displaying appropriate messaging to users and/or prompting them to retry authentication (by returning them to the authentication URL described above).
 
 ## Request Structure
 
@@ -43,14 +38,13 @@ The basic structure for requests is:
 
 `https://app.gemguide.com/prices-api/{route}?arg1=foo&arg2=bar`
 
-Where `{route}` is either `gem` or `diamond` depending on what pricing data you are after.
+Where `{route}` is either `gem` or `diamond` depending on what pricing data you are after.  All query args should be percent URL encoded.
 
-
-For the Colored Gemstone route, this could look like:
+For the Colored Gemstone route, an example request might look like:
 
 `https://app.gemguide.com/prices-api/gem?&name=Almandine%20Garnet&weight=1`
 
-For the Diamond route, this could look like:
+For the Diamond route, an example request might look like:
 
 `https://app.gemguide.com/prices-api/diamond?name=Emerald&weight=1&color=G&clarity=IF/FL`
 
@@ -61,16 +55,16 @@ In order for any of the above requests to work, you will need to provide two par
 1. `api_key`: This is the API key that Gemguide  provided to you.
 2. `user`: This is the unique identifier for the Gemguide user logged in to your app. You receive this ID via the success callback detailed in the **Setup** and **Authentication** sections above.
 
-
-<u>Error Handling</u>
+**Error Handling:**
 
 Error responses use the following format:
 
-	{
-		code: 'error_code',
-		message: 'This is a message describing the error in human friendly language'
-	}
-	
+```
+{
+    code: 'error_code',
+    message: 'This is a message describing the error in human friendly language'
+}
+```
 
 Invalid requests may receive one of the following error responses:
 
@@ -78,10 +72,9 @@ Invalid requests may receive one of the following error responses:
 - `user_client_unauthenticated`: This means the unique ID of the user (as detailed in the **Authentication** section above) is invalid or has since changed. 
 - `user_client_expired`: This means that it has been 30 days since the unique ID of the user has been updated. **A user is required to log in and be re-authenticated at least once every 30 days in order to prevent this error from happening.**
 
-
 ## Routes
 
-###<u>Colored Gemstones</u>
+### Colored Gemstones
 
 The structure for the Colored Gemstone route is as follows: 
 
@@ -96,50 +89,31 @@ The response will be an object of arrays like so:
 
 ```
 {
-    "1": [
-        2
-    ],
-    "2": [
-        2
-    ],
-    "3": [
-        3
-    ],
-    "4": [
-        4
-    ],
-    "5": [
-        5
-    ],
-    "6": [
-        7
-    ],
-    "7": [
-        9
-    ],
-    "8": [
-        10
-    ],
-    "9": [
-        12
-    ],
-    "10": [
-        15
-    ]
+    "1": [ 2 ],
+    "2": [ 2 ],
+    "3": [ 3 ],
+    "4": [ 4 ],
+    "5": [ 5 ],
+    "6": [ 7 ],
+    "7": [ 9 ],
+    "8": [ 10 ],
+    "9": [ 12 ],
+    "10": [ 15 ]
 }
 ```
 
-The values 1 through 10 represent increasing levels of clarity, which affect the prices. The reason the price values are given as arrays is because sometimes there will be one value (set recommended price) and sometimes there will be a range of values (recommended price range). **The developer can assume that these arrays will always contain either zero, one, or two values, depending respectively upon whether it's valid configuration, a range, or a set price.**
+The values 1 through 10 represent increasing levels of clarity (which typically implies a corresponding increase in price).  Price values are returned as arrays since some values represent a range of prices from low to high (e.g. `[9, 12]`) rather than as a single, discreet price point. **Developers can check the size of the returned array to determine whether the value repesents a single price or a price range; one value means a single price, two values means a range of prices.**
 
-
-<u>Error Handling</u>
+**Error Handling:**
 
 Error responses use the following format:
 
-	{
-		code: 'error_code',
-		message: 'This is a message describing the error in human friendly language'
-	}
+```
+{
+    code: 'error_code',
+    message: 'This is a message describing the error in human friendly language'
+}
+```
 
 Invalid requests may receive one of the following error responses:
 
@@ -150,8 +124,7 @@ Invalid requests may receive one of the following error responses:
 - `invalid_weight`: The `weight` specified falls outside the range of weights for the requested gem. The gem's valid weight range will be specified in the `message` property in the error response.
 - `server_error`: There was an unexpected server issue.
 
-
-###<u>Diamonds</u>
+### Diamonds
 
 The structure for the Colored Gemstone route is as follows: 
 
@@ -186,9 +159,21 @@ The response will be an array of three arrays, each with three values, like so:
 ]
 ```
 
-These arrays represent the price of the diamond configuration you specified in the query arguments, as well as their adjacent values. The exact price that is derived based on the query arguments can be found at `array[1][1]` (the center value). The value at `array[1][0]` represents the same configuration except one clarity level higher, likewise the value at `array[1][2]` represents the same configuration at one clarity level lower. The values in `array[0]` and `array[2]` represent the same clarities found in `array[1]` except they are based on the next lower (`array[0]`) or next higher (`array[2]`) color value.
+The response contains a multi-dimensional array a "table" of prices based on the configuration specified in the query arguments. The top-level array values represent rows in the table, whereas each nested array represents columns within that row.  The example API response from above could be represented as:
 
-So another way to visualize a given response could be like so (not precisely based on the above example):
+```
+|  -  | 6930 | 6230 |
+|-----|------|------|
+|  -  | 5530 | 5050 |
+|-----|------|------|
+|  -  | 4700 | 4200 |
+```
+
+Note that the response is "centered" on the requested value, meaning the API always returns the previous and subsequent rows of data, as well as the preceeding and following values within the same row.  
+
+In programmatic terms, this means the exact price derived based on the query arguments is found at `array[1][1]`.  The value at `array[1][0]` represents the same configuration except one clarity level higher and the value at `array[1][2]` represents the configuration at one clarify level lower.  The values found in the preceeding (i.e. `array[0]`) and following (i.e. `array[2]`) rows representing the same clarity as `array[1]`, but with the next lower or higher color value respectively.
+
+Another way to visualize a given response could be like so (not precisely based on the above example):
 
 ```
 [
@@ -210,7 +195,7 @@ So another way to visualize a given response could be like so (not precisely bas
 ]
 ```
 
-There will be instances, such as in the first diamond response example, where there are no valid values for a specified configuration. For example, if you select `IF/FL` as your clarity level, there is no higher clarity level to reference. In these cases, instead of a price, the value will be filled in with a hyphen (`-`). This can also happen with colors, as you cannot go higher than `D` or lower than `M`.
+In some instances, such as in the first diamond response example, where there are no valid values for a specified configuration. For example, if you select `IF/FL` as your clarity level, there is no higher clarity level to reference. In these cases, instead of a price, the value will be filled in with a hyphen (`-`). This can also happen with colors, as you cannot go higher than `D` or lower than `M`.
 
 To further elaborate this, if you set a color to be `D` (the highest color value) and clarity to be `I3` (the lowest clarity value) you would get a response that looks like this:
 
@@ -236,15 +221,16 @@ To further elaborate this, if you set a color to be `D` (the highest color value
 
 So in the above case, you can only reference lower color levels and higher clarity levels.
 
-
-<u>Error Handling</u>
+**Error Handling:**
 
 Error responses use the following format:
 
-	{
-		code: 'error_code',
-		message: 'This is a message describing the error in human friendly language'
-	}
+```
+{
+    code: 'error_code',
+    message: 'This is a message describing the error in human friendly language'
+}
+```
 
 Invalid requests may receive one of the following error responses:
 
@@ -258,36 +244,3 @@ Invalid requests may receive one of the following error responses:
 - `invalid_color`: The `color` value did not match a valid color. Valid colors are specified at the top of this section (**Routes#Diamonds**)
 - `invalid_clarity`: The `color` value did not match a valid clarity. Valid clarities are specified at the top of this section (**Routes#Diamonds**)
 - `server_error`: There was an unexpected server issue.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
