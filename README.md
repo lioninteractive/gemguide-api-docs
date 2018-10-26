@@ -159,7 +159,7 @@ The response will be an array of three arrays, each with three values, like so:
 ]
 ```
 
-The response contains a multi-dimensional array a "table" of prices based on the configuration specified in the query arguments. The top-level array values represent rows in the table, whereas each nested array represents columns within that row.  The example API response from above could be represented as:
+The response contains a multi-dimensional array, a "table" of prices, based on the configuration specified in the query arguments. The top-level array values represent rows in the table, whereas each nested array represents columns within that row.  The example API response from above could be represented as:
 
 ```
 |  -  | 6930 | 6230 |
