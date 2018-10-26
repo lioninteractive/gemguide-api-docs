@@ -129,7 +129,7 @@ The response will be an object of arrays like so:
 }
 ```
 
-The values 1 through 10 represent increasing levels of clarity, which affect the prices. The reason the price values are given as arrays is because sometimes there will be one value (set recommended price) and sometimes there will be a range of values (recommended price range). **The developer can assume that these arrays will always contain either one or two values, depending upon whether it's a range or a set price.**
+The values 1 through 10 represent increasing levels of clarity, which affect the prices. The reason the price values are given as arrays is because sometimes there will be one value (set recommended price) and sometimes there will be a range of values (recommended price range). **The developer can assume that these arrays will always contain either zero, one, or two values, depending respectively upon whether it's valid configuration, a range, or a set price.**
 
 
 <u>Error Handling</u>
