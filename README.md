@@ -1,30 +1,30 @@
-![Gemguide logo](https://app.gemguide.com/static/images/logo.png)
+![GemGuide logo](https://app.gemguide.com/static/images/logo.png)
 
-# Gemguide Pricing Data API
+# GemGuide Pricing Data API
 
-This documentation is intended for developers learning how to use the Gemguide Pricing API. 
+This documentation is intended for developers learning how to use the GemGuide Pricing API. 
 
 All of the steps required will be outlined below, but if you would like to see a working example to supplement your understanding, please see the following [repository](https://github.com/lioninteractive/gemguide-api-docs).
 
 ## Setup
 
-If you are reading this documentation then you presumably already have an API key and have been registered as an authorized API user for the Gemguide Pricing API. If do not already have an API key, please contact Gemguide support for further assistance.  The API key will be required for all requests.
+If you are reading this documentation then you presumably already have an API key and have been registered as an authorized API user for the GemGuide Pricing API. If do not already have an API key, please contact GemGuide support for further assistance.  The API key will be required for all requests.
 
 As part of the registration process to receive your API key, you will also need to provide two URLs:
 
-1. **Success callback:** Users will be redirected to this URL after successfully authenticating with their Gemguide account credentials. *A user-specific token will be appended to the callback URL. This token is required for all subsequent requests on the user's behalf.*
+1. **Success callback:** Users will be redirected to this URL after successfully authenticating with their GemGuide account credentials. *A user-specific token will be appended to the callback URL. This token is required for all subsequent requests on the user's behalf.*
 	
 2. **Failure callback:** Users will be redirected to this URL after authentication failure (e.g. incorrect account credentials).
 
 ## Authentication
 
-The Gemguide Pricing API uses a modified OAuth1 flow to authenticate users with their [Gemworld International](https://gemguide.com) account credentials.  All Pricing Data API requests require both a valid API key (application specific; provided by Gemguide as part of the API access registration described above) **and** the user-specific token obtained via a query arg appended to the Success callback URL.
+The GemGuide Pricing API uses a modified OAuth1 flow to authenticate users with their [Gemworld International](https://gemguide.com) account credentials.  All Pricing Data API requests require both a valid API key (application specific; provided by GemGuide as part of the API access registration described above) **and** the user-specific token obtained via a query arg appended to the Success callback URL.
 
 In order to begin the authentication process and retrieve the user token, you will need to create a login button that sends users to the following URL (where `client_key` is your application's API key as described in the **Setup** section above):
 
 `https://app.gemguide.com/api_authorize?client_key={your API key}`
 
-Once arriving at the above URL, users will be asked to authenticate using their Gemguide account credentials.  If they are successfully authenticated, then they will be eventually routed back to your **Success callback** as detailed in the **Setup** section above. The success URL could look like the following, where the `user` query arg is appended by Gemguide. This identifier must be retrieved and stored by your app, as it is required in order to make future requests:
+Once arriving at the above URL, users will be asked to authenticate using their GemGuide account credentials.  If they are successfully authenticated, then they will be eventually routed back to your **Success callback** as detailed in the **Setup** section above. The success URL could look like the following, where the `user` query arg is appended by GemGuide. This identifier must be retrieved and stored by your app, as it is required in order to make future requests:
 
 `https://app.yourapp.com/success_callback?user={unique identifier}`
 
@@ -52,8 +52,8 @@ For the Diamond route, an example request might look like:
 
 In order for any of the above requests to work, you will need to provide two parameters as headers:
 
-1. `api_key`: This is the API key that Gemguide  provided to you.
-2. `user`: This is the unique identifier for the Gemguide user logged in to your app. You receive this ID via the success callback detailed in the **Setup** and **Authentication** sections above.
+1. `api_key`: This is the API key that GemGuide  provided to you.
+2. `user`: This is the unique identifier for the GemGuide user logged in to your app. You receive this ID via the success callback detailed in the **Setup** and **Authentication** sections above.
 
 **Error Handling:**
 
@@ -82,7 +82,7 @@ The structure for the Colored Gemstone route is as follows:
 
 There are two required arguments:
 
-1. `name`: This argument is the name of the gem. It is **case sensitive** and must correspond **precisely** to the colored gemstone's name in the [Gemguide App](https://app.gemguide.com). Space characters should be escaped as `%20` i.e. `Almandine%20Garnet`
+1. `name`: This argument is the name of the gem. It is **case sensitive** and must correspond **precisely** to the colored gemstone's name in the [GemGuide App](https://app.gemguide.com). Space characters should be escaped as `%20` i.e. `Almandine%20Garnet`
 2. `weight`: This is the weight of the gemstone in carats.
 
 The response will be an object of arrays like so:
@@ -119,20 +119,20 @@ Invalid requests may receive one of the following error responses:
 
 - `no_shape_name_provided`: The request was missing a value for `name`
 - `no_weight_provided`: The request was missing a value for `weight`
-- `invalid_gem`: The value for `name` does not match any gemstone names in the Gemguide database.
+- `invalid_gem`: The value for `name` does not match any gemstone names in the GemGuide database.
 - `invalid_weight_nan`: The `weight` specified is not a number
 - `invalid_weight`: The `weight` specified falls outside the range of weights for the requested gem. The gem's valid weight range will be specified in the `message` property in the error response.
 - `server_error`: There was an unexpected server issue.
 
 ### Diamonds
 
-The structure for the Colored Gemstone route is as follows: 
+The structure for the Diamond route is as follows: 
 
 `https://app.gemguide.com/prices-api/diamond?name={name}&weight={weight}&color={color}&clarity={clarity}`
 
 There are four required arguments:
 
-1. `name`: This is the name of the diamond shape. It is **case sensitive** and must correspond **precisely** to the diamond shape's name in the [Gemguide App](https://app.gemguide.com). Space characters should be escaped as `%20` i.e. `Old%20European`
+1. `name`: This is the name of the diamond shape. It is **case sensitive** and must correspond **precisely** to the diamond shape's name in the [GemGuide App](https://app.gemguide.com). Space characters should be escaped as `%20` i.e. `Old%20European`
 2. `weight`: This is the weight of the diamond in carats.
 3. `color`: This is the **case sensitive** color value of the diamond. Colors values are specified as upper-case letters from D-M (i.e, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`, `M`)
 4. `clarity`: This is the **case sensitive** clarity value of the diamond. Clarity values must be one of the following:  `IF/FL`, `VVS1`, `VVS2`, `VS1`, `VS2`, `SI1`, `SI2`, `I1`, `I2`, `I3`
@@ -242,5 +242,5 @@ Invalid requests may receive one of the following error responses:
 - `invalid_weight_nan`: The `weight` specified is not a number
 - `invalid_weight`: The `weight` specified falls outside the range of weights for the requested diamond. The diamond shape's valid weight range will be specified in the `message` property in the error response.
 - `invalid_color`: The `color` value did not match a valid color. Valid colors are specified at the top of this section (**Routes#Diamonds**)
-- `invalid_clarity`: The `color` value did not match a valid clarity. Valid clarities are specified at the top of this section (**Routes#Diamonds**)
+- `invalid_clarity`: The `clarity` value did not match a valid clarity. Valid clarities are specified at the top of this section (**Routes#Diamonds**)
 - `server_error`: There was an unexpected server issue.
